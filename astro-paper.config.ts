@@ -25,7 +25,10 @@ export default defineAstroPaperConfig({
     editPost: { enabled: false },
     search: "pagefind",
   },
-  socials: [{ name: "github", url: "https://github.com/Muelsyseqwq" }],
+  socials: [
+    { name: "github", url: "https://github.com/Muelsyseqwq" },
+    { name: "mail", url: "mailto:yanghaotian.bjfu@gmail.com" },
+  ],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },
     { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
