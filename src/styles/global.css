@@ -1,4 +1,6 @@
 @import "@fontsource-variable/noto-sans-sc/wght.css";
+@import "@hanzi.pro/webfonts-lxgw-wenkai/swap/400.css";
+@import "@hanzi.pro/webfonts-lxgw-wenkai/swap/500.css";
 @import "tailwindcss";
 @import "./theme.css";
 @import "./typography.css";
@@ -7,6 +9,15 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @layer base {
+  html {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-variant-east-asian: proportional-width;
+  }
+
   * {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
@@ -20,6 +31,13 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-code);
   }
 }
 

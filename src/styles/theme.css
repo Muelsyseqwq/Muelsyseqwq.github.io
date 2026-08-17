@@ -8,7 +8,12 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --font-app:
-    "Noto Sans SC Variable", "PingFang SC", "Microsoft YaHei", sans-serif;
+    "Noto Sans SC Variable", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Segoe UI", sans-serif;
+  --font-article:
+    "LXGW WenKai", "Noto Serif SC", "Songti SC", SimSun, serif;
+  --font-code:
+    "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 /* Light theme values */
