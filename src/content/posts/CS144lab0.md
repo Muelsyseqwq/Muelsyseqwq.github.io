@@ -61,7 +61,7 @@ void get_URL( const string& host, const string& path )
   Address server_address = Address(host, "http"); // define the server address
 
   client_socket.connect(server_address); // connect with the server
-  std::string request = "GET " + path + "HTTP/1.1\r\nHost: "+ host + "\r\nConnection: close\r\n\r\n";
+  std::string request = "GET " + path + " HTTP/1.1\r\nHost: "+ host + "\r\nConnection: close\r\n\r\n";
   client_socket.write((string_view)request);
   while(!client_socket.eof()){
     std::string response;

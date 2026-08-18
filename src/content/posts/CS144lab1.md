@@ -49,7 +49,7 @@ description: "CS144 Lab 1 实验记录: a Reassembler"
 
 首先 Lab 给出我们的函数定义 `void insert( uint64_t first_index, std::string data, bool is_last_substring );` 里面有下标和数据, `is_last_substring` 表示这个数据是否是最后一个数据。
 
-对于接收到的数据, 我们应该考虑其那一部分是真正需要考虑的, 重复的不用考虑, 太后面超过 `capacity` 的也不用考虑。 那就剩下一个中间区间, 或者说一个窗口, 我们定义可以 `Writer` 可以写入的下一个字节的下标为 `next_index`, 则我们可以处理的窗口大小即为 `[next_index, next_index + available capacity)`, 也即是途中标为 `width: available capacity` 的部分。而随着 `next_index` 不断增加, 窗口也就不断向右滑动。
+对于接收到的数据, 我们应该考虑其那一部分是真正需要考虑的, 重复的不用考虑, 太后面超过 `capacity` 的也不用考虑。 那就剩下一个中间区间, 或者说一个窗口, 我们定义可以 `Writer` 可以写入的下一个字节的下标为 `next_index`, 则我们可以处理的窗口大小即为 `[next_index, next_index + available capacity)`, 也即是图中标为 `width: available capacity` 的部分。而随着 `next_index` 不断增加, 窗口也就不断向右滑动。
 
 起初我不太理解为什么窗口大小可以直接是 `available capacity`, 我一直认为 `Reassembler` 的存储也会占用 `capacity`, 但是看图可以明白, 确实占用了, 不过占用的都是在 `available capacity` 内, 超出的部分直接丢弃就好了, 同时重复出现的也不需要再次存储, 所以最多也就是使用 `available capacity` 的空间。
 
