@@ -1,6 +1,6 @@
 ---
 
-title: CS144-lab0
+title: CS144-Lab0
 
 author: Muelsyse
 
@@ -13,6 +13,8 @@ draft: false
 tags:
   - Computer Network
   - CS144
+
+series: CS144
 
 ogImage: ../../assets/images/cs144/cs144_lab0.png
 

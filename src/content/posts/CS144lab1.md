@@ -1,6 +1,6 @@
 ---
 
-title: CS144-lab1
+title: CS144-Lab1
 
 author: Muelsyse
 
@@ -13,6 +13,8 @@ draft: false
 tags:
   - Computer Network
   - CS144
+
+series: CS144
 
 description: "CS144 Lab 1 实验记录: a Reassembler"
 

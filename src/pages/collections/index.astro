@@ -1,0 +1,72 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Card from "@/components/Card.astro";
+import Footer from "@/components/Footer.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+const posts = getSortedPosts(await getCollection("posts"));
+
+const groupedPosts = posts.reduce(
+  (groups, post) => {
+    const series = post.data.series;
+    if (!series) return groups;
+    (groups[series] ??= []).push(post);
+    return groups;
+  },
+  {} as Record<string, CollectionEntry<"posts">[]>
+);
+
+const collections = Object.entries(groupedPosts).sort(([nameA], [nameB]) =>
+  nameA.localeCompare(nameB, locale)
+);
+---
+
+<Layout
+  title={`${t.pages.collectionsTitle} | ${config.site.title}`}
+  description={t.pages.collectionsDesc}
+>
+  <Header />
+  <Breadcrumb />
+
+  <Main pageTitle={t.pages.collectionsTitle} pageDesc={t.pages.collectionsDesc}>
+    {
+      collections.length > 0 ? (
+        <div class="grid gap-8">
+          {collections.map(([name, seriesPosts]) => (
+            <section
+              id={name.toLowerCase().replace(/\s+/g, "-")}
+              class="border-border rounded-lg border px-5 py-4"
+            >
+              <div class="border-border flex items-baseline justify-between gap-4 border-b pb-3">
+                <h2 class="text-xl font-semibold sm:text-2xl">{name}</h2>
+                <span class="text-muted-foreground shrink-0 text-sm">
+                  {seriesPosts.length}{" "}
+                  {seriesPosts.length === 1 ? "post" : "posts"}
+                </span>
+              </div>
+              <ul>
+                {seriesPosts.map(post => (
+                  <Card variant="h3" {...post} />
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      ) : (
+        <p class="text-muted-foreground py-8 text-center">
+          No collections yet.
+        </p>
+      )
+    }
+  </Main>
+
+  <Footer />
+</Layout>
