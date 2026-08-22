@@ -2,7 +2,7 @@
 author: Muelsyse
 pubDatetime: 2026-08-17T08:20:00Z
 title: 中文排版测试：在 AstroPaper 中使用霞鹜文楷
-featured: true
+featured: false
 draft: false
 tags:
   - Astro

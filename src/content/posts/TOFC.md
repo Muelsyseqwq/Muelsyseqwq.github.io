@@ -5,7 +5,7 @@ author: Muelsyse
 
 pubDatetime: 2026-08-18T10:21:03+08:00
 
-featured: false
+featured: true
 
 draft: false
 
