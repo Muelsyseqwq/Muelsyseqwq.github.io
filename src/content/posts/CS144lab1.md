@@ -16,6 +16,8 @@ tags:
 
 series: CS144
 
+ogImage: ../../assets/images/cs144/cs144_lab1.png
+
 description: "CS144 Lab 1 实验记录: a Reassembler"
 
 ---

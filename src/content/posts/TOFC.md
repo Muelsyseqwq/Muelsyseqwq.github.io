@@ -16,6 +16,8 @@ tags:
 
 series: Paper Reading
 
+ogImage: ../../assets/images/Papper_Reading/TOFC/TOFC.png
+
 description: "阅读论文 'Task-Oriented Feature Compression for Multimodal  Understanding via Device-Edge Co-Inference ' 笔记。 "
 ---
 ![TOFC](../../assets/images/Papper_Reading/TOFC/TOFC.png)

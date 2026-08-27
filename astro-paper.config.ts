@@ -7,7 +7,7 @@ export default defineAstroPaperConfig({
     description: "A student from Beijing Forestry University.",
     author: "Muelsyse",
     profile: "https://github.com/Muelsyseqwq",
-    ogImage: "default-og.jpg",
+    ogImage: "site-og.png",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
     dir: "ltr",
@@ -19,22 +19,23 @@ export default defineAstroPaperConfig({
   },
   features: {
     lightAndDarkMode: true,
-    dynamicOgImage: false,
+    dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
     editPost: { enabled: false },
     search: "pagefind",
   },
   socials: [
-    { name: "github", url: "https://github.com/Muelsyseqwq" },
-    { name: "mail", url: "mailto:yanghaotian.bjfu@gmail.com" },
+    {
+      name: "github",
+      url: "https://github.com/Muelsyseqwq",
+      linkTitle: "Muelsyse on GitHub",
+    },
+    {
+      name: "mail",
+      url: "mailto:yanghaotian.bjfu@gmail.com",
+      linkTitle: "Send an email to Muelsyse",
+    },
   ],
-  shareLinks: [
-    { name: "whatsapp", url: "https://wa.me/?text=" },
-    { name: "facebook", url: "https://www.facebook.com/sharer.php?u=" },
-    { name: "x",        url: "https://x.com/intent/post?url=" },
-    { name: "telegram", url: "https://t.me/share/url?url=" },
-    { name: "pinterest", url: "https://pinterest.com/pin/create/button/?url=" },
-    { name: "mail",     url: "mailto:?subject=See%20this%20post&body=" },
-  ],
+  shareLinks: [],
 });

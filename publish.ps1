@@ -102,7 +102,9 @@ function Test-StagedSecrets {
 
 $repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $astroCli = Join-Path $repoRoot "node_modules\.bin\astro.cmd"
+$astroDevLock = Join-Path $repoRoot ".astro\dev.json"
 $devServerWasRunning = $false
+$devServerPid = $null
 Push-Location $repoRoot
 
 try {
@@ -157,15 +159,43 @@ try {
     }
   }
 
-  if (Test-Path -LiteralPath $astroCli -PathType Leaf) {
-    $devStatus = & $astroCli dev status 2>&1
-    $devServerWasRunning =
-      $LASTEXITCODE -eq 0 -and ($devStatus -match "Dev server running")
-    if ($devServerWasRunning) {
-      Invoke-NativeStep -Name "Temporarily stop Astro dev server" -Command {
-        & $astroCli dev stop
-      }
+  if (Test-Path -LiteralPath $astroDevLock -PathType Leaf) {
+    try {
+      $devState = Get-Content -Raw -LiteralPath $astroDevLock | ConvertFrom-Json
+      $devServerPid = [int]$devState.pid
+      $devProcess = Get-Process -Id $devServerPid -ErrorAction SilentlyContinue
+      $devServerWasRunning =
+        $null -ne $devProcess -and $devProcess.ProcessName -eq "node"
     }
+    catch {
+      Write-Warning "Could not read the Astro dev server state. The stale lock file will be ignored."
+    }
+  }
+
+  if ($devServerWasRunning) {
+    Write-Host "`n==> Temporarily stop Astro dev server" -ForegroundColor Cyan
+
+    if (Test-Path -LiteralPath $astroCli -PathType Leaf) {
+      & $astroCli dev stop
+    }
+
+    # Astro may discard a valid lock file as stale on Windows and leave the
+    # process alive. Always verify the PID captured before invoking the CLI.
+    if ($null -ne (Get-Process -Id $devServerPid -ErrorAction SilentlyContinue)) {
+      Stop-Process -Id $devServerPid -Force
+    }
+
+    $deadline = [DateTime]::UtcNow.AddSeconds(10)
+    while (
+      $null -ne (Get-Process -Id $devServerPid -ErrorAction SilentlyContinue) -and
+      [DateTime]::UtcNow -lt $deadline
+    ) {
+      Start-Sleep -Milliseconds 100
+    }
+    if ($null -ne (Get-Process -Id $devServerPid -ErrorAction SilentlyContinue)) {
+      throw "Astro dev server process $devServerPid could not be stopped."
+    }
+    Remove-Item -LiteralPath $astroDevLock -Force -ErrorAction SilentlyContinue
   }
 
   Invoke-NativeStep -Name "Install locked dependencies" -Command { npm ci }

@@ -1,0 +1,22 @@
+{
+  "New blog post": {
+    "scope": "markdown",
+    "prefix": "blog-post",
+    "body": [
+      "---",
+      "title: $1",
+      "author: Muelsyse",
+      "pubDatetime: $CURRENT_YEAR-$CURRENT_MONTH-${CURRENT_DATE}T$CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND+08:00",
+      "featured: false",
+      "draft: true",
+      "tags:",
+      "  - $2",
+      "series: $3",
+      "description: $4",
+      "---",
+      "",
+      "$0",
+    ],
+    "description": "Create a blog post with collection metadata",
+  },
+}

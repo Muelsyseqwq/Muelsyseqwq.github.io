@@ -28,9 +28,3 @@ public/pagefind
 
 # pnpm
 .pnpm-store
-
-# docker compose
-compose.override.yaml
-
-# Temporary Astro template directory created during initialization
-extraterrestrial-equinox/
