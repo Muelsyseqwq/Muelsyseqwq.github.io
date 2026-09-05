@@ -55,6 +55,8 @@ Run the included publishing script from PowerShell:
 
 The script fetches remote changes, installs dependencies, checks and builds the site, commits the changes, and pushes them to GitHub. GitHub Actions then deploys the `main` branch to GitHub Pages.
 
+Before building, it automatically removes trailing spaces/tabs and extra blank lines at EOF from changed or new UTF-8 text files. Markdown two-space hard line breaks are preserved. Ignored files, binary files, `AGENTS.md`, and `CLAUDE.md` are excluded. This cleanup also runs with `-DryRun`, which updates local files but does not commit or push.
+
 To validate the project without committing or pushing:
 
 ```powershell

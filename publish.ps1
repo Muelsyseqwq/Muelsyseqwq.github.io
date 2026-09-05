@@ -198,6 +198,10 @@ try {
     Remove-Item -LiteralPath $astroDevLock -Force -ErrorAction SilentlyContinue
   }
 
+  Invoke-NativeStep -Name "Fix trailing whitespace" -Command {
+    node scripts/fix-publish-whitespace.mjs
+  }
+
   Invoke-NativeStep -Name "Install locked dependencies" -Command { npm ci }
   Invoke-NativeStep -Name "Run ESLint" -Command { npm run lint }
   Invoke-NativeStep -Name "Build production site" -Command { npm run build }
@@ -224,7 +228,11 @@ try {
   }
 
   Invoke-NativeStep -Name "Check staged whitespace" -Command {
-    git diff --cached --check
+    git diff --cached --check -- . ":(exclude,icase)*.md" ":(exclude,icase)*.mdx"
+  }
+  Invoke-NativeStep -Name "Check staged Markdown whitespace" -Command {
+    # Markdown uses trailing double spaces for hard line breaks.
+    git -c core.whitespace=-blank-at-eol diff --cached --check -- ":(icase)*.md" ":(icase)*.mdx"
   }
   Test-StagedSecrets
 
